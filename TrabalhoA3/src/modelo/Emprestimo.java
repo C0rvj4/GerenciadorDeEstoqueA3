@@ -18,6 +18,7 @@ public class Emprestimo {
     private Date dataDevolucao;
     private int id_ferramenta;
     private int id_amigo;
+    private String situacao;
     
     
     public Emprestimo(Date dataEmprestimo, Date dataDevolucao, int amigoID, int ferramentaID){
@@ -101,6 +102,15 @@ public class Emprestimo {
     public void setDataFinal(Date dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+    
     // --------------------------------------------------------------------------------------------------------------
     
     

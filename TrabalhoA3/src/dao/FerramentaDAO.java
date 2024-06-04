@@ -31,22 +31,20 @@ public class FerramentaDAO {
             throw new ExceptionDAO("Erro ao registra nova ferramenta: " + erro);
         } finally {
 
-            try {
-                if (pStatement != null) {
-                    pStatement.close();
-                }
-            } catch (SQLException erro) {
-                throw new ExceptionDAO("Erro ao tentar encerrar o Statement: " + erro);
-            }
-
-            try {
-                if (cnn != null) {
+            if (cnn != null) {
+                try {
                     cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
                 }
-            } catch (SQLException erro) {
-                throw new ExceptionDAO("Erro ao tentar encerrar a conexão com o banco de dados: " + erro);
             }
-
+            if (pStatement != null) {
+                try {
+                    pStatement.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
+                }
+            }
         }
     }
 }

@@ -104,7 +104,7 @@ public class EmprestimoDAO {
 
         return emprestimosLista;
     }
-    
+
     public List<Emprestimo> getAllEmprestimos() throws ExceptionDAO {
 
         Connection cnn = null;
@@ -199,11 +199,54 @@ public class EmprestimoDAO {
             }
         }
     }
-    
-    public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO{
-        return null;
-    };
-    
+
+    public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "SELECT * FROM emprestimos WHERE situacao = 'vencido' ";
+        ResultSet select = null;
+        List<Emprestimo> emprestimosLista = new ArrayList<>();
+
+        try {
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            select = pStatement.executeQuery(sql);
+
+            while (select.next()) {
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.setDataEmprestimo(select.getDate("data_inicial"));
+                emprestimo.setID(select.getInt("ID"));
+                emprestimo.setDataDevolucao(select.getDate("data_final"));
+                emprestimo.setId_amigo(select.getInt("ID_amigo"));
+                emprestimo.setId_ferramenta(select.getInt("ID_ferramenta"));
+                emprestimo.setSituacao(select.getString("situacao"));
+                emprestimosLista.add(emprestimo);
+
+            }
+            return emprestimosLista;
+
+        } catch (SQLException getEmprestimosVencidos) {
+            throw new ExceptionDAO("Não foi possível realizar a retirada do relatório de empréstimos vencidos erro: " + getEmprestimosVencidos);
+        } finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
+                }
+            }
+            if (pStatement != null) {
+                try {
+                    pStatement.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
+                }
+            }
+        }
+    }
+
     public void encerrarEmprestimo(int emprestimo_id) throws ExceptionDAO {
 
         Connection cnn = null;
@@ -241,13 +284,11 @@ public class EmprestimoDAO {
         }
 
     }
-    
+
     public void updateSituacaoDoEmprestimo() throws ExceptionDAO {
 
         Connection cnn = null;
         PreparedStatement pStatement = null;
-      
+
     }
 }
-
-
