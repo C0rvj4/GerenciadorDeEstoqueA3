@@ -10,12 +10,12 @@ public class Amigo{
 
 //----------------------------------------------------construtores----------------------------------------------------------------//
 
-//construtor vazio da classe
+    //construtor vazio da classe
     public Amigo(){
 
     }
 
-//construtor com parâmetros 
+    //construtor com parâmetros 
     public Amigo(String nome, String contato){
         this.contato = contato;
         this.nome = nome;
@@ -50,9 +50,16 @@ public class Amigo{
 
 //---------------------------------------------------Funções---------------------------------------------------------//
 
-//chama a classe DAO para realizar o registro do novo amigo
+    //chama a classe DAO para realizar o registro do novo amigo
     public void registrarAmigo(Amigo amigo){
         AmigoDAO dao = new AmigoDAO();
         dao.registrarAmigo(amigo);
     }
+
+    public List<Amigo> getAmigosCadastrados(){
+        AmigoDAO dao = new AmigoDAO();
+        dao.getAmigosCadastrados();
+    }
+
+    
 }

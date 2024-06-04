@@ -1,5 +1,6 @@
 
 package controle;
+import modelo.Amigo;
 import modelo.amigo;
 
 
@@ -13,6 +14,12 @@ public class AmigoControle{
             amigo.registrarAmigo(amigo);
             return true;
         }else return false;
+    }
+
+//Chama a função
+    public List<Amigo> getAmigosCadastrados(){
+        Amigo amigo = new Amigo();
+        amigo.getAmigosCadastrados();
     }
 
 }
