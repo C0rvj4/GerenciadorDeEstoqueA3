@@ -5,13 +5,14 @@ import modelo.amigo;
 
 /**
  *
- * @author felip
+ * @author felipe
  */
 /*A classe Controle package "controle" serve como uma ponte que liga a visão (parte interativa do usuário e entrada de dados)
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 05/06/2024  */
+Último modificação 05/06/2024  ~~ modificado por Felipe 
+*/
 
 public class AmigoControle{
 
@@ -25,7 +26,7 @@ public class AmigoControle{
         }else return false;
     }
 
-//Chama a função
+//Chama a função getAmigosCadastrados() da classe Amigo (package modelo)
     public List<Amigo> getAmigosCadastrados(){
         Amigo amigo = new Amigo();
         amigo.getAmigosCadastrados();

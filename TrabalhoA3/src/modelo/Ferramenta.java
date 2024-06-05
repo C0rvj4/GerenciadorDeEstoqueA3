@@ -8,12 +8,12 @@ import dao.FerramentaDAO;
 
 /**
  *
- * @author felip
+ * @author felipe
  */
 /*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
 As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-Última modificação efetuada em 05/06/2024
+Última modificação efetuada em 05/06/2024 ~~ modificado por Felipe
 */  
 
 public class Ferramenta {
@@ -25,6 +25,8 @@ public class Ferramenta {
    
 //-----------------------------------------------------------------------------------------------------------------------------------//
 
+
+//construtor da classe Ferramenta
     public Ferramenta(String nome, String marca, double custoDeAquisicao) {
         this.nome = nome;
         this.marca = marca;
@@ -32,7 +34,9 @@ public class Ferramenta {
     }
     
     
- 
+//método de registro da classe ferramenta, tem como parâmetro um objeto da classe ferramenta
+//cria um objeto da classe dao e chama o método cadastroFerramea() passando como parâmetro o mesmo objeto passado como parâmetro anteriormente;
+
    public void cadastroFerramenta(Ferramenta ferramenta) throws ExceptionDAO{
        FerramentaDAO dao = new FerramentaDAO();
        dao.cadastroFerramenta(ferramenta);
