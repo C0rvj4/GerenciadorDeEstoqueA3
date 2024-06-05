@@ -3,6 +3,15 @@ package controle;
 import modelo.Amigo;
 import modelo.amigo;
 
+/**
+ *
+ * @author felip
+ */
+/*A classe Controle package "controle" serve como uma ponte que liga a visão (parte interativa do usuário e entrada de dados)
+com as classes modelo, que fara o CRUD nos objetos.
+Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
+-----------------------------------------------------------------------------------------------------------------------------
+Último modificação 05/06/2024  */
 
 public class AmigoControle{
 

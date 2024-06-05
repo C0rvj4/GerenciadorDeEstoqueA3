@@ -11,6 +11,12 @@ import java.sql.SQLException;
  *
  * @author felip
  */
+/*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
+As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Última modificação efetuada em 05/06/2024
+*/ 
+
 public class Emprestimo {
 
     private int ID;

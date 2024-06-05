@@ -1,6 +1,15 @@
 package modelo;
 import dao.AmigoDAO;
 
+/**
+ *
+ * @author felip
+ */
+/*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
+As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Última modificação efetuada em 05/06/2024
+*/ 
 
 public class Amigo{
 
@@ -51,12 +60,15 @@ public class Amigo{
 //---------------------------------------------------Funções---------------------------------------------------------//
 
     //chama a classe DAO para realizar o registro do novo amigo
+    //Tem como parâmetro um objeto da classe amigo o mesmo será passado como parâmetro no método registrarAmigo()
     public void registrarAmigo(Amigo amigo){
         AmigoDAO dao = new AmigoDAO();
         dao.registrarAmigo(amigo);
     }
 
-    public List<Amigo> getAmigosCadastrados(){
+    //Não requer parâmetro para ser utiliza, não retorna valor
+    //Faz a chamada do método getAmigosCadastrados() localizado na classe "dao" que retornará uma lista dos amigos registrados no sistema 
+    public void getAmigosCadastrados(){
         AmigoDAO dao = new AmigoDAO();
         dao.getAmigosCadastrados();
     }
