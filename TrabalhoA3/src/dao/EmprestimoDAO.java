@@ -19,8 +19,7 @@ import java.util.List;
 São as últimas camadas do código antes da alteração do banco de dados.
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 05/06/2024 ~~ modificado por Felipe::
-*/
-
+ */
 public class EmprestimoDAO {
 
     public void cadastroEmprestimo(Emprestimo emprestimo) throws ExceptionDAO {
@@ -42,9 +41,8 @@ public class EmprestimoDAO {
 
         } catch (SQLException erro) {
             throw new ExceptionDAO("Não foi possível registrar o empréstimo erro:" + erro);
-        } 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
 
             if (cnn != null) {
@@ -93,9 +91,8 @@ public class EmprestimoDAO {
             }
         } catch (SQLException ErroProcuraDeEmprestimoPorAmigoID) {
             throw new ExceptionDAO("Não foi possível localizar o empréstimo solicitado erro:" + ErroProcuraDeEmprestimoPorAmigoID);
-        } 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
 
             if (cnn != null) {
@@ -148,9 +145,8 @@ public class EmprestimoDAO {
 
         } catch (SQLException erro) {
             throw new ExceptionDAO("Não foi possível retornar os Emprestimos armazenados erro:" + erro);
-        } 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
 
             if (cnn != null) {
@@ -248,9 +244,8 @@ public class EmprestimoDAO {
 
         } catch (SQLException getEmprestimosVencidos) {
             throw new ExceptionDAO("Não foi possível realizar a retirada do relatório de empréstimos vencidos erro: " + getEmprestimosVencidos);
-        }
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro  
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro  
         finally {
 
             if (cnn != null) {
@@ -288,9 +283,8 @@ public class EmprestimoDAO {
 
         } catch (SQLException erro) {
             throw new ExceptionDAO("Não foi possível realizar o fechamento do empréstimo erro:" + erro);
-        } 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
 
             if (cnn != null) {

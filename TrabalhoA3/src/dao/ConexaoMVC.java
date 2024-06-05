@@ -12,10 +12,8 @@ import java.sql.SQLException;
 Sempre que é necessário acessar o banco de dados exigindo uma conexão com o mesmo este método será utilizado 
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 05/06/2024 ~~ modificado por Felipe::
-*/
-
+ */
 public class ConexaoMVC {
-
 
 //estabelece a conexão com o banco de dados
     public Connection getConnection() {
@@ -23,15 +21,17 @@ public class ConexaoMVC {
         Connection conn = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");}
-         catch (ClassNotFoundException exception) {
-            exception.printStackTrace();}
-         
-        try{
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
+        }
+
+        try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mvc?useSSL=false", "root", "F!el1pe2003.@0");
-        }catch(SQLException exception){
-            exception.printStackTrace();}
-        
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
         return conn;
 
     }

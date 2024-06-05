@@ -1,4 +1,3 @@
-
 package controle;
 
 import dao.EmprestimoDAO;
@@ -16,8 +15,7 @@ com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 05/06/2024  ~~ modificado por Felipe 
-*/
-
+ */
 public class EmprestimoControle {
 
 //Verifica se os parametros fornecidos não são nulos, para previnir a adição de dados incongruentes ao Banco de Dados.
@@ -43,7 +41,7 @@ public class EmprestimoControle {
 
         if (amigoID > 0) {
             EmprestimoDAO dao = new EmprestimoDAO();
-            dao.getEmprestimoPorAmigoID();
+            dao.getEmprestimoPorAmigoID(amigoID);
         }
         return true;
     }
@@ -62,7 +60,6 @@ public class EmprestimoControle {
             return false;
         }
     }
-
 
 //Em fase de produção ~~
     public boolean atualizarSituacaoEmprestimo() {

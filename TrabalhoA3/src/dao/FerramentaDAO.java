@@ -14,8 +14,7 @@ import modelo.Ferramenta;
 São as últimas camadas do código antes da alteração do banco de dados.
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 05/06/2024 ~~ modificado por Felipe::
-*/
-
+ */
 public class FerramentaDAO {
 
     public void cadastroFerramenta(Ferramenta ferramenta) throws ExceptionDAO {
@@ -32,12 +31,11 @@ public class FerramentaDAO {
             pStatement.setDouble(3, ferramenta.getCustoDeAquisicao());
             pStatement.execute();
             JOptionPane.showMessageDialog(null, "A ferramenta foi registrada com sucesso ");
-            
+
         } catch (SQLException erro) {
             throw new ExceptionDAO("Erro ao registra nova ferramenta: " + erro);
-        } 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
 
             if (cnn != null) {
@@ -57,4 +55,3 @@ public class FerramentaDAO {
         }
     }
 }
-

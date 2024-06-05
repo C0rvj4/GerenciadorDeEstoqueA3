@@ -6,7 +6,6 @@ import dao.EmprestimoDAO;
 import dao.ExceptionDAO;
 import java.sql.SQLException;
 
-
 /**
  *
  * @author felipe
@@ -15,8 +14,7 @@ import java.sql.SQLException;
 As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 Última modificação efetuada em 05/06/2024 ~~ modificado por Felipe;;
-*/ 
-
+ */
 public class Emprestimo {
 
     private int ID;
@@ -25,39 +23,46 @@ public class Emprestimo {
     private int id_ferramenta;
     private int id_amigo;
     private String situacao;
-    
+
 //construtor da classe Emprestimo
-    public Emprestimo(Date dataEmprestimo, Date dataDevolucao, int amigoID, int ferramentaID){
-        
+    public Emprestimo(Date dataEmprestimo, Date dataDevolucao, int amigoID, int ferramentaID) {
+
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
         this.id_amigo = amigoID;
         this.id_ferramenta = ferramentaID;
-       
-    };
+
+    }
+
+    ;
     
 //construtor vazio da classe Emprestimo
-    public Emprestimo(){
-        
-    };
+    public Emprestimo() {
+
+    }
+
+    ;
     
     // registra um novo emprestimo no banco de dados 
-    public void registrarEmprestimo(Emprestimo emprestimo) throws ExceptionDAO{
+    public void registrarEmprestimo(Emprestimo emprestimo) throws ExceptionDAO {
         EmprestimoDAO dao = new EmprestimoDAO();
         dao.cadastroEmprestimo(emprestimo);
-        
+
     }
+
     // encerra o empréstimo (altera a situação do empréstimo para encerrado)
-    public void EncerrarEmprestimo(int emprestimo_id) throws ExceptionDAO{
+    public void EncerrarEmprestimo(int emprestimo_id) throws ExceptionDAO {
         EmprestimoDAO dao = new EmprestimoDAO();
         dao.encerrarEmprestimo(emprestimo_id);
-        
+
     }
-    
+
     //faz o update da situação dos emprestimos
-    public void updateSituacaoEmpestimos(){
-        
-    };
+    public void updateSituacaoEmpestimos() {
+
+    }
+
+    ;
     
    
     
@@ -70,7 +75,7 @@ public class Emprestimo {
     public void setDataEmprestimo(Date dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
-    
+
     public void setDataDevolucao(Date dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
@@ -78,6 +83,7 @@ public class Emprestimo {
     public int getID() {
         return ID;
     }
+
     public Date getDataEmprestimo() {
         return dataEmprestimo;
     }
@@ -117,8 +123,6 @@ public class Emprestimo {
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
-    
+
     // --------------------------------------------------------------------------------------------------------------
-    
-    
 }
