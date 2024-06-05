@@ -30,6 +30,25 @@ public class Amigo{
         this.nome = nome;
     }
 
+//chama a classe DAO para realizar o registro do novo amigo
+//Tem como parâmetro um objeto da classe amigo o mesmo será passado como parâmetro no método registrarAmigo()
+    public void registrarAmigo(Amigo amigo){
+        AmigoDAO dao = new AmigoDAO();
+        dao.registrarAmigo(amigo);
+    }
+
+//Não requer parâmetro para ser utiliza, não retorna valor
+//Faz a chamada do método getAmigosCadastrados() localizado na classe "dao" que retornará uma lista dos amigos registrados no sistema 
+    public void getAmigosCadastrados(){
+        AmigoDAO dao = new AmigoDAO();
+        dao.getAmigosCadastrados();
+    }
+//Re
+    public void excluirAmigo(int ID_amigo){
+        AmigoDAO dao = new AmigoDAO();
+        dao.excluirAmigo(ID_amigo);
+    }
+
 
 //-----------------------------------------------Getter e Stter ------------------------------------------------------//
 
@@ -56,22 +75,5 @@ public class Amigo{
     public int getAmigoID(){
         return ID_amigo;
     }
-
-//---------------------------------------------------Funções---------------------------------------------------------//
-
-    //chama a classe DAO para realizar o registro do novo amigo
-    //Tem como parâmetro um objeto da classe amigo o mesmo será passado como parâmetro no método registrarAmigo()
-    public void registrarAmigo(Amigo amigo){
-        AmigoDAO dao = new AmigoDAO();
-        dao.registrarAmigo(amigo);
-    }
-
-    //Não requer parâmetro para ser utiliza, não retorna valor
-    //Faz a chamada do método getAmigosCadastrados() localizado na classe "dao" que retornará uma lista dos amigos registrados no sistema 
-    public void getAmigosCadastrados(){
-        AmigoDAO dao = new AmigoDAO();
-        dao.getAmigosCadastrados();
-    }
-
     
 }

@@ -17,9 +17,10 @@ Além de fazer o papel de intermediário as classes controle farão a validaçã
 public class AmigoControle{
 
 //Faz a validação dos dados, verifica se os dados não são nulos ou muito curtos, para garantir que apenas dados congruentes sejam adicionados ao BD
+//caso o paço anterior não seja bem sucedido ele retorna um valor false (Sem tratamento ainda)
     public boolean registrarAmigo(String nome, String contato){
 
-        if(nome != null && nome.length() >= 2 && contato != null && contato.length() >= 2){
+        if(nome != null && nome.length() >= 3 && contato != null && contato.length() >= 8){
             Amigo amigo = new Amigo(contato, nome);
             amigo.registrarAmigo(amigo);
             return true;
@@ -30,6 +31,19 @@ public class AmigoControle{
     public List<Amigo> getAmigosCadastrados(){
         Amigo amigo = new Amigo();
         amigo.getAmigosCadastrados();
+    }
+
+//Faz a validação do ID_amigo, caso seja ele cria um objeto do tipo amigo
+//Chama o método excluirAmigo() que tem como parâmetro o ID fornecido
+//Caso a validação não seja bem sucedida ela retorna um valor false (sem tratamento ainda)
+    public boolean excluirAmigo(int ID_amigo){
+
+        if(ID_amigo != null && ID_amigo > 0){
+            Amigo amigo = new Amigo();
+            amigo.excluirAmigo(ID_amigo);
+            return true
+
+        }else return false 
     }
 
 }
