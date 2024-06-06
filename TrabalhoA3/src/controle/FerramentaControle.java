@@ -11,8 +11,10 @@ import modelo.Ferramenta;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 Último modificação 05/06/2024 ~~ modificado por Felipe
  */
+
 public class FerramentaControle {
 
 //Faz a validação dos dados para registrar uma nova ferramenta no banco de dados, após a validação cria um objeto ferramenta com os parâmetros passados

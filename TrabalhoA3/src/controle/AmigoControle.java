@@ -1,3 +1,4 @@
+
 package controle;
 
 import dao.ExceptionDAO;
@@ -15,14 +16,17 @@ Além de fazer o papel de intermediário as classes controle farão a validaçã
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 05/06/2024  ~~ modificado por Felipe 
  */
-public class AmigoControle {
+public class AmigoControle{
+
 
 //Faz a validação dos dados, verifica se os dados não são nulos ou muito curtos, para garantir que apenas dados congruentes sejam adicionados ao BD
 //caso o paço anterior não seja bem sucedido ele retorna um valor false (Sem tratamento ainda)
     public boolean registrarAmigo(String nome, String contato) throws ExceptionDAO {
 
         if (nome != null && nome.length() >= 3 && contato != null && contato.length() >= 8) {
-            Amigo amigo = new Amigo(contato, nome);
+            Amigo amigo = new Amigo();
+            amigo.setNome(nome);
+            amigo.setContato(contato);
             amigo.registrarAmigo(amigo);
             return true;
         } else {
@@ -51,4 +55,18 @@ public class AmigoControle {
         }
     }
 
+public boolean editarNome(int ID_amigo, String novoNome){
+        
+        if(ID_amigo > 0 && novoNome != null && novoNome.length() > 3){
+            Amigo amigo = new Amigo();
+            amigo.setNome(novoNome);
+            amigo.setAmigoID(ID_amigo);
+            amigo.editarNome(amigo);
+            return true; 
+
+        }return false;
+    }
 }
+    
+
+

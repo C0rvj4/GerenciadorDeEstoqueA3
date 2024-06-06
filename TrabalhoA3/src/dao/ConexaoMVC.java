@@ -11,8 +11,10 @@ import java.sql.SQLException;
 /* A classe ConexaoMVC tem como único objetivo cria a conexão com o Banco de Dados através do método getConnection().
 Sempre que é necessário acessar o banco de dados exigindo uma conexão com o mesmo este método será utilizado 
 -----------------------------------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 Último modificação 05/06/2024 ~~ modificado por Felipe::
  */
+
 public class ConexaoMVC {
 
 //estabelece a conexão com o banco de dados
