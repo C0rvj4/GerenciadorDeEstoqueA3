@@ -8,7 +8,8 @@ import dao.AmigoDAO;
 /*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
 As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-Última modificação efetuada em 05/06/2024 ~~ modificado por Felipe;;
+Última modificação 06/06/2024  ~~ modificado por Felipe;;
+
 */ 
 
 public class Amigo{
@@ -30,6 +31,8 @@ public class Amigo{
         this.nome = nome;
     }
 
+//-------------------------------------------------Métodos------------------------------------------------------------------------//
+
 //chama a classe DAO para realizar o registro do novo amigo
 //Tem como parâmetro um objeto da classe amigo o mesmo será passado como parâmetro no método registrarAmigo()
     public void registrarAmigo(Amigo amigo){
@@ -43,14 +46,22 @@ public class Amigo{
         AmigoDAO dao = new AmigoDAO();
         dao.getAmigosCadastrados();
     }
-//Re
+//Faz a exclusão de um Registro de amigo, tem como parâmletro o ID desse amigo para que seja selecionado o objeto no banco de dados
+//Cria um objeto do tipo AmigoDAO e chama a função desse objeto passando como parâmetro o ID_amigo fornecido anteriormente 
     public void excluirAmigo(int ID_amigo){
         AmigoDAO dao = new AmigoDAO();
         dao.excluirAmigo(ID_amigo);
     }
 
+//Faz a edição do nome de um objeto do tipo Amigo, pedindo como parâmetro de edição o novo nome desejado e o ID para identificação do objeto
+////Cria um objeto do tipo AmigoDAO e chama a função editarNome() e passa como parametro os ID e o novo Nome fornecidos anteriormente
+    public void editarNome(Amigo amigo){
+        AmigoDAO dao = new AmigoDAO();
+        dao.editarNome(amigo.getID, amigo.getAmigoID);
+    }
 
-//-----------------------------------------------Getter e Stter ------------------------------------------------------//
+
+//-----------------------------------------------Getter e Stter ---------------------------------------------------------------------//
 
     public void setNome(String nome){
         this.nome = nome;

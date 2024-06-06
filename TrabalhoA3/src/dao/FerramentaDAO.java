@@ -13,7 +13,8 @@ import modelo.Ferramenta;
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 05/06/2024 ~~ modificado por Felipe::
+Última modificação 06/06/2024  ~~ modificado por Felipe;;
+
 */
 
 public class FerramentaDAO {

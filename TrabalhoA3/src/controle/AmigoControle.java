@@ -11,7 +11,8 @@ import modelo.amigo;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 05/06/2024  ~~ modificado por Felipe 
+Última modificação 06/06/2024  ~~ modificado por Felipe;;
+
 */
 
 public class AmigoControle{
@@ -44,6 +45,18 @@ public class AmigoControle{
             return true
 
         }else return false 
+    }
+
+    public boolean editarNome(int ID_amigo, String novoNome){
+        
+        if(ID_amigo > 0 && novoNome != null && novoNome.length() > 3){
+            Amigo amigo = new amigo();
+            amigo.setNome(novoNome);
+            amigo.setAmigoID(ID_amigo);
+            amigo.editarNome(amigo);
+            return true; 
+
+        }return false;
     }
 
 }

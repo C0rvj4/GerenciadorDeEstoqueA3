@@ -15,8 +15,12 @@ import java.sql.PreparedStatement;
  */
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
+
+//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 05/06/2024 ~~ modificado por Felipe::
+Última modificação 06/06/2024  ~~ modificado por Felipe;;
+
 */
 
 public class AmigoDAO{
@@ -26,7 +30,7 @@ public class AmigoDAO{
 
     }
 
-    //registra um novo amigo no banco de dados utilizando PreparedStatement onde é pré definido um comando no formato de string para fazer a modificação no banco de dados
+//registra um novo amigo no banco de dados utilizando PreparedStatement onde é pré definido um comando no formato de string para fazer a modificação no banco de dados
     public void registrarAmigo(Amigo amigo) throws ExceptionDAO {
 
 
@@ -91,10 +95,44 @@ public class AmigoDAO{
 
         }catch(SQLException ErroRetiradaDeRelatorio){
             throw new ExceptionDAO("não foi possível retirar o relatório de amigos registrados erro:" + ErroRetiradaDeRelatorio);
+        } finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
+                }
+                if (pStatement != null) {
+                    try {
+                        pStatement.close();
+                    } catch (SQLException erro) {
+                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
+                    }
+                }
+            }
         }
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
-        finally {
+    } 
+
+//Este método edita o nome de um amigo, pede como parâmetro o novoNome para substituir e o ID_amigo para localizar o cadastro
+//Utiliza da linguagem SQL para localizar o registro utilizando WHERE = ? que recebe o valor do parâmetro ID_amigo
+    public void editarAmigo(int ID_amigo, String novoNome ) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        ResultSet result = null;
+        String sql = "UPDATE amigos SET nome = ? WHERE ID_amigo = ?";
+
+        try{
+
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setString(1, novoNome);
+            pStatement.setint(2, ID_amigo);
+            pStatement.execute();
+        }catch(SQLException erroEditarCadastro) {
+            throw new ExceptionDAO("Não foi possível editar o nome do cadastro selecionado erro:" + erroEditarCadastro);
+        } finally {
 
             if (cnn != null) {
                 try {
