@@ -54,19 +54,27 @@ public class Amigo{
         AmigoDAO dao = new AmigoDAO();
         dao.excluirAmigo(ID_amigo);
     }
+    
+//Faz a edição do nome de um objeto do tipo Amigo, pedindo como parâmetro de edição o novo nome desejado e o ID para identificação do objeto
+//Cria um objeto do tipo AmigoDAO e chama a função editarNome() e passa como parametro os ID e o novo Nome fornecidos anteriormente
+    public void editarNome(Amigo amigo) throws ExceptionDAO {
+        AmigoDAO dao = new AmigoDAO();
+        dao.editarNome(amigo.getID(), amigo.getNome());
+    }
+
+//Cria um objeto do tipo AmigoDAO e chama a função editarContato passando como parâmetro os dados do amigo
+//Utilizando dos Getters para extrair a informação do objeto fornecido como parâmetro 
+    public void editarContato(Amigo amigo) throws ExceptionDAO {
+        AmigoDAO dao = new AmigoDAO();
+        dao.editarContato(amigo.getID(), amigo.getContato());
+        
+    }
+
+
 
 
 //-----------------------------------------------Getter e Stter ------------------------------------------------------//
   
-//Faz a edição do nome de um objeto do tipo Amigo, pedindo como parâmetro de edição o novo nome desejado e o ID para identificação do objeto
-////Cria um objeto do tipo AmigoDAO e chama a função editarNome() e passa como parametro os ID e o novo Nome fornecidos anteriormente
-    public void editarNome(Amigo amigo) throws ExceptionDAO {
-        AmigoDAO dao = new AmigoDAO();
-        dao.editarNome(amigo.getAmigoID(), amigo.getNome());
-    }
-
-
-//-----------------------------------------------Getter e Stter ---------------------------------------------------------------------//
 
     public void setNome(String nome){
         this.nome = nome;
@@ -84,11 +92,11 @@ public class Amigo{
         return contato;
     }
 
-    public void setAmigoID(int ID_amigo) {
+    public void setID(int ID_amigo) {
         this.ID_amigo = ID_amigo;
     }
 
-    public int getAmigoID() {
+    public int getID() {
         return ID_amigo;
     }
 

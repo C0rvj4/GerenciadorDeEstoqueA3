@@ -19,8 +19,7 @@ São as últimas camadas do código antes da alteração do banco de dados.
 //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
 // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-Último modificação 05/06/2024 ~~ modificado por Felipe::
+Último modificação 06/06/2024 ~~ modificado por Felipe::
  */
 public class AmigoDAO {
 
@@ -29,7 +28,8 @@ public class AmigoDAO {
 
     }
 
-//registra um novo amigo no banco de dados utilizando PreparedStatement onde é pré definido um comando no formato de string para fazer a modificação no banco de dados
+//registra um novo amigo no banco de dados utilizando PreparedStatement 
+//onde é pré definido um comando no formato de string para fazer a modificação no banco de dados
     public void registrarAmigo(Amigo amigo) throws ExceptionDAO {
 
         Connection cnn = null;
@@ -66,7 +66,7 @@ public class AmigoDAO {
     }
 
 // método que retorna um lista de objetos do tipo "Amigo", não requer nenhum parâmetro.
-//utilizado para consultar todos os registros de Amigos no banco de dados retornando em uma lista com nome de "relatorio"
+//utilizado para consultar todos os registros de Amigos no banco de dados retornando em uma lista "relatorio"
     public List<Amigo> getAmigosCadastrados() throws ExceptionDAO {
 
         Connection cnn = null;
@@ -83,7 +83,7 @@ public class AmigoDAO {
             while (select.next()) {
 
                 Amigo amigo = new Amigo();
-                amigo.setAmigoID(select.getInt("ID_amigo"));
+                amigo.setID(select.getInt("ID_amigo"));
                 amigo.setNome(select.getString("nome"));
                 amigo.setContato(select.getString("contato"));
                 relatorio.add(amigo);
@@ -129,8 +129,8 @@ public class AmigoDAO {
             pStatement.setString(1, novoNome);
             pStatement.setInt(2, ID_amigo);
             pStatement.execute();
-        } catch (SQLException erroEditarCadastro) {
-            throw new ExceptionDAO("Não foi possível editar o nome do cadastro selecionado erro:" + erroEditarCadastro);
+        } catch (SQLException erroEditarNome) {
+            throw new ExceptionDAO("Não foi possível editar o nome do cadastro selecionado erro:" + erroEditarNome);
         } finally {
 
             if (cnn != null) {
@@ -150,6 +150,8 @@ public class AmigoDAO {
         }
     }
 
+//Faz a exclusão de um cadastro no banco de dados a partir de um ID_amigo fornecido como parâmetro 
+//Utiliza da linguagem SQL para localizar o registro utilizando WHERE = ? que recebe o valor do parâmetro ID_amigo
     public void excluirAmigo(int ID_amigo) throws ExceptionDAO {
 
         Connection cnn = null;
@@ -170,8 +172,8 @@ public class AmigoDAO {
             if (cnn != null) {
                 try {
                     cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
+                } catch (SQLException erroExcluirAmigo) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erroExcluirAmigo);
                 }
                 if (pStatement != null) {
                     try {
@@ -184,4 +186,43 @@ public class AmigoDAO {
         }
 
     }
+
+//Faz a edição do coluna contato do banco de dados, necessida dos parâmetro de contato para a edição, e o ID para localizar o registro
+//Utiliza da linguagem SQL para localizar o registro utilizando WHERE = ? que recebe o valor do parâmetro ID_amigo
+    public void editarContato(int ID_amigo, String contato) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "UPDATE amigos SET contato = ? WHERE ID_amigo = ?";
+
+        try {
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setString(1, contato);
+            pStatement.setInt(2, ID_amigo);
+            pStatement.execute();
+
+        } catch (SQLException erroEditarContato) {
+            
+            throw new ExceptionDAO("Não foi possível realizar a alteração do contato erro:" + erroEditarContato);
+
+        } finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erroExcluirAmigo) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erroExcluirAmigo);
+                }
+                if (pStatement != null) {
+                    try {
+                        pStatement.close();
+                    } catch (SQLException erro) {
+                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
+                    }
+                }
+            }
+        }
+    }
 }
+
