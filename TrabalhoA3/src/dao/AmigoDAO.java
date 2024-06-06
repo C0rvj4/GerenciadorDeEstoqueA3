@@ -16,8 +16,8 @@ import java.util.List;
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
 
-//bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 06/06/2024 ~~ modificado por Felipe::
  */

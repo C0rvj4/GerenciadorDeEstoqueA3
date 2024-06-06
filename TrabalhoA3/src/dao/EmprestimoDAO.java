@@ -18,15 +18,14 @@ import java.util.List;
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
 
-//Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-// ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-Último modificação 05/06/2024 ~~ modificado por Felipe::
+Último modificação 06/06/2024 ~~ modificado por Felipe::
  */
-
 public class EmprestimoDAO {
 
+//Cadastra um empréstimo no banco de dados através dos dados fornecidos pelo package controle
     public void cadastroEmprestimo(Emprestimo emprestimo) throws ExceptionDAO {
 
         String sql = "insert into emprestimos (data_inicial, data_final, ID_amigos, ID_ferramenta, situacao) value (?, ? ,? ,?, ?)";
@@ -46,8 +45,7 @@ public class EmprestimoDAO {
 
         } catch (SQLException erro) {
             throw new ExceptionDAO("Não foi possível registrar o empréstimo erro:" + erro);
-        } 
-         finally {
+        } finally {
 
             if (cnn != null) {
                 try {
@@ -65,6 +63,101 @@ public class EmprestimoDAO {
             }
         }
 
+    }
+
+//altera a coluna situação do empréstimo para "encerrado" sinalizando que o empréstimo ja foi finalizado
+    public void encerrarEmprestimo(int emprestimo_id) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        ResultSet update = null;
+        String sql = "UPDATE emprestimos SET situacao = ? where ID = ?";
+
+        try {
+
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            update = pStatement.executeQuery(sql);
+
+            pStatement.setString(1, "Encerrado");
+            pStatement.setInt(2, emprestimo_id);
+
+        } catch (SQLException erro) {
+            throw new ExceptionDAO("Não foi possível realizar o fechamento do empréstimo erro:" + erro);
+        } finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
+                }
+                if (pStatement != null) {
+                    try {
+                        pStatement.close();
+                    } catch (SQLException erro) {
+                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
+                    }
+                }
+            }
+        }
+
+    }
+
+//Em desenvolvimento ~~
+    public void updateSituacaoDoEmprestimo() throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+    }
+
+//----------------------------------------------------Relatórios----------------------------------------------------------------------//
+    public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "SELECT * FROM emprestimos WHERE situacao = 'vencido' ";
+        ResultSet select = null;
+        List<Emprestimo> emprestimosLista = new ArrayList<>();
+
+        try {
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            select = pStatement.executeQuery(sql);
+
+            while (select.next()) {
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.setDataEmprestimo(select.getDate("data_inicial"));
+                emprestimo.setID(select.getInt("ID"));
+                emprestimo.setDataDevolucao(select.getDate("data_final"));
+                emprestimo.setId_amigo(select.getInt("ID_amigo"));
+                emprestimo.setId_ferramenta(select.getInt("ID_ferramenta"));
+                emprestimo.setSituacao(select.getString("situacao"));
+                emprestimosLista.add(emprestimo);
+
+            }
+            return emprestimosLista;
+
+        } catch (SQLException getEmprestimosVencidos) {
+            throw new ExceptionDAO("Não foi possível realizar a retirada do relatório de empréstimos vencidos erro: " + getEmprestimosVencidos);
+
+        } finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
+                }
+            }
+            if (pStatement != null) {
+                try {
+                    pStatement.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
+                }
+            }
+        }
     }
 
     // Função para consultar um empréstimo usando como parâmetro o ID do amigo que fez o empréstimo, utiliza a classe ResultSet para fazer o tratamento dos dados obtidos;
@@ -96,7 +189,7 @@ public class EmprestimoDAO {
         } catch (SQLException ErroProcuraDeEmprestimoPorAmigoID) {
             throw new ExceptionDAO("Não foi possível localizar o empréstimo solicitado erro:" + ErroProcuraDeEmprestimoPorAmigoID);
 
-        } finally{
+        } finally {
 
             if (cnn != null) {
                 try {
@@ -117,7 +210,7 @@ public class EmprestimoDAO {
         return emprestimosLista;
     }
 
-//Método sem parâmetros exigidos, retorna uma lista de todos os empréstimos (ativos, atrasados e encerrados)
+    //Método sem parâmetros exigidos, retorna uma lista de todos os empréstimos (ativos, atrasados e encerrados)
 //Utiliza a Classe ResultSet para tratar os dados recebidos do banco de dados 
     public List<Emprestimo> getAllEmprestimos() throws ExceptionDAO {
 
@@ -151,7 +244,6 @@ public class EmprestimoDAO {
 
         } finally {
 
-
             if (cnn != null) {
                 try {
                     cnn.close();
@@ -169,7 +261,7 @@ public class EmprestimoDAO {
         }
     }
 
-//Retorna todos os empréstimos ativos verificando se a coluna "situacao" está preenchida com "Em andamento"
+    //Retorna todos os empréstimos ativos verificando se a coluna "situacao" está preenchida com "Em andamento"
 //É retornado em forma de lista de objetos do tipo "Emprestimo"
     public List<Emprestimo> getAllEmprestimosAtivos() throws ExceptionDAO {
 
@@ -216,102 +308,7 @@ public class EmprestimoDAO {
                 }
             }
         }
-    }
 
-    public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO {
-
-        Connection cnn = null;
-        PreparedStatement pStatement = null;
-        String sql = "SELECT * FROM emprestimos WHERE situacao = 'vencido' ";
-        ResultSet select = null;
-        List<Emprestimo> emprestimosLista = new ArrayList<>();
-
-        try {
-            cnn = new ConexaoMVC().getConnection();
-            pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
-
-            while (select.next()) {
-                Emprestimo emprestimo = new Emprestimo();
-                emprestimo.setDataEmprestimo(select.getDate("data_inicial"));
-                emprestimo.setID(select.getInt("ID"));
-                emprestimo.setDataDevolucao(select.getDate("data_final"));
-                emprestimo.setId_amigo(select.getInt("ID_amigo"));
-                emprestimo.setId_ferramenta(select.getInt("ID_ferramenta"));
-                emprestimo.setSituacao(select.getString("situacao"));
-                emprestimosLista.add(emprestimo);
-
-            }
-            return emprestimosLista;
-
-        } catch (SQLException getEmprestimosVencidos) {
-            throw new ExceptionDAO("Não foi possível realizar a retirada do relatório de empréstimos vencidos erro: " + getEmprestimosVencidos);
-
-        } 
-     finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
-        }
-    }
-
-    public void encerrarEmprestimo(int emprestimo_id) throws ExceptionDAO {
-
-        Connection cnn = null;
-        PreparedStatement pStatement = null;
-        ResultSet update = null;
-        String sql = "UPDATE emprestimos SET situacao = ? where ID = ?";
-
-        try {
-
-            cnn = new ConexaoMVC().getConnection();
-            pStatement = cnn.prepareStatement(sql);
-            update = pStatement.executeQuery(sql);
-
-            pStatement.setString(1, "Encerrado");
-            pStatement.setInt(2, emprestimo_id);
-
-        } catch (SQLException erro) {
-            throw new ExceptionDAO("Não foi possível realizar o fechamento do empréstimo erro:" + erro);
-        } 
-       finally {
-
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
-        }
-
-    }
-
-    //Em desenvolvimento ~~
-    public void updateSituacaoDoEmprestimo() throws ExceptionDAO {
-
-        Connection cnn = null;
-        PreparedStatement pStatement = null;
-
+        //---------------------------------------------------------------------------------------------------------------------------------//
     }
 }

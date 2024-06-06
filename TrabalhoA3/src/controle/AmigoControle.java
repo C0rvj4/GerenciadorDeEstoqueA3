@@ -14,8 +14,11 @@ que liga a visão (parte interativa do usuário e entrada de dados)
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário
 as classes controle farão a validação dos dados antes de enviar as classes modelo 
+
+Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 05/06/2024  ~~ modificado por Felipe 
+Último modificação 06/06/2024  ~~ modificado por Felipe 
  */
 public class AmigoControle {
 
@@ -74,7 +77,7 @@ public class AmigoControle {
 
 //Faz a validação dos parâmetros fornecidos pela camada view para evitar erros na atribuição dos dados e na pesquisa
 //Cria um objeto do tipo amigo para chamar a função de edição e passa os parâmetros fornecidos anteriormente
-    public boolean editarContato(int ID_amigo, String contato) {
+    public boolean editarContato(int ID_amigo, String contato) throws ExceptionDAO {
 
         if (ID_amigo > 0 && contato != null && contato.length() >= 8) {
             Amigo amigo = new Amigo();
