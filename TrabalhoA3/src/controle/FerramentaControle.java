@@ -57,3 +57,11 @@ public class FerramentaControle {
         }
     }
 }
+
+//Este método não requer validação de parâmetros pois não exige parâmetros
+//Esta função foi criada por necessidade de uma padronização na chamada dos métodos 
+//Controle > modelo > DAO
+    public getFerramentasRegistradas(){
+        Ferramenta ferramenta = new Ferramenta();
+        ferramenta.getFerramentasRegistradas();
+    }

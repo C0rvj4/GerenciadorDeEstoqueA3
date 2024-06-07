@@ -131,4 +131,53 @@ public class FerramentaDAO {
 
         }
     }
+
+
+//Retorna um relatório das ferramentas registradas no formato de Arraylist
+//Não requer parâmetro
+//Utiliza uma condicional While para criar objetos e inseri-los dentro do arrayList (relatorios) 
+    public List<Ferramenta> getFerramentasRegistradas() throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "SELECT * from ferramentas";
+        List<Ferramenta> relatorio = new ArrayList<Ferramenta>();
+        ResultSet select = null;
+
+        try{
+            
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            select = prepareStatement.executeQuery(sql);
+
+            while(select.next()){
+                Ferramenta ferramenta = new Ferramenta();
+                ferramenta.setID(select.getInt("ID_ferramenta"));
+                ferramenta.setNome(select.getString("nome"));
+                ferramenta.setString(select.getString("marca"));
+                ferramenta.setDouble(select.getCustoDeAquisicao("custo_aquisicao"));
+                relatorio.add(ferramenta);
+            }
+            return relatorio;
+        }catch(SQLException erroRetiradaDeRelatorio){
+            throw new ExceptionDAO("Não foi possível retirar o relatório de ferramentas registradas, erro:" + erroRetiradaDeRelatorio);
+        }finally {
+
+            if (cnn != null) {
+                try {
+                    cnn.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
+                }
+            }
+            if (pStatement != null) {
+                try {
+                    pStatement.close();
+                } catch (SQLException erro) {
+                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
+                }
+            }
+
+        }
+    }
 }

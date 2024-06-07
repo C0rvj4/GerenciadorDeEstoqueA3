@@ -61,7 +61,10 @@ public class Ferramenta {
 
     }
 
-    public void ferramentasRegistradas() {
+//Método para retirar um relatório, não exige parâmetros, chama a função getFerramentasRegistradas da classe ferramentaDAO
+    public void getFerramentasRegistradas() {
+        FerramentaDAO dao = new FerramentaDAO();
+        dao.getFerramentasRegistradas();
 
     }
 
