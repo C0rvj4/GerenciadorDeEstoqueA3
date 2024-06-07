@@ -2,7 +2,10 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Ferramenta;
 
@@ -16,9 +19,9 @@ São as últimas camadas do código antes da alteração do banco de dados.
 Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
 ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 06/06/2024 ~~ modificado por Felipe::
+Último modificação 07/06/2024 ~~ modificado por Felipe;;
  */
-public class FerramentaDAO {
+public class FerramentaDAO extends ConexaoMVC {
 
 //Faz o registro de um novo objeto do tipo ferramenta no banco de dados local
     public void cadastroFerramenta(Ferramenta ferramenta) throws ExceptionDAO {
@@ -41,21 +44,7 @@ public class FerramentaDAO {
         } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
         // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
         finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
 
@@ -77,22 +66,7 @@ public class FerramentaDAO {
         } catch (SQLException erroAlteraraMarca) {
             throw new ExceptionDAO("Não foi possível alterar a marca da ferramenta cadastrada, erro:" + erroAlteraraMarca);
         } finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
-
+            encerrarConexao(cnn, pStatement);
         }
     }
 
@@ -113,25 +87,9 @@ public class FerramentaDAO {
         } catch (SQLException erroExcluirAmigo) {
             throw new ExceptionDAO("não foi possível excluir o registro selecionado, erro:" + erroExcluirAmigo);
         } finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
-
+            encerrarConexao(cnn, pStatement);
         }
     }
-
 
 //Retorna um relatório das ferramentas registradas no formato de Arraylist
 //Não requer parâmetro
@@ -144,40 +102,26 @@ public class FerramentaDAO {
         List<Ferramenta> relatorio = new ArrayList<Ferramenta>();
         ResultSet select = null;
 
-        try{
-            
+        try {
+
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = prepareStatement.executeQuery(sql);
+            select = pStatement.executeQuery(sql);
 
-            while(select.next()){
+            while (select.next()) {
                 Ferramenta ferramenta = new Ferramenta();
                 ferramenta.setID(select.getInt("ID_ferramenta"));
                 ferramenta.setNome(select.getString("nome"));
-                ferramenta.setString(select.getString("marca"));
-                ferramenta.setDouble(select.getCustoDeAquisicao("custo_aquisicao"));
+                ferramenta.setMarca(select.getString("marca"));
+                ferramenta.setCustoDeAquisicao(select.getDouble("valor"));
                 relatorio.add(ferramenta);
             }
             return relatorio;
-        }catch(SQLException erroRetiradaDeRelatorio){
+        } catch (SQLException erroRetiradaDeRelatorio) {
             throw new ExceptionDAO("Não foi possível retirar o relatório de ferramentas registradas, erro:" + erroRetiradaDeRelatorio);
-        }finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
-
+        } finally {
+            encerrarConexao(cnn, pStatement);
         }
     }
+
 }

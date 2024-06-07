@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Amigo;
 
 /**
  *
@@ -18,19 +19,19 @@ import java.util.List;
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
 
-Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 06/06/2024 ~~ modificado por Felipe::
+Último modificação 07/06/2024 ~~ modificado por Felipe
  */
-public class EmprestimoDAO {
+public class EmprestimoDAO extends ConexaoMVC {
 
 //Cadastra um empréstimo no banco de dados através dos dados fornecidos pelo package controle
     public void cadastroEmprestimo(Emprestimo emprestimo) throws ExceptionDAO {
 
-        String sql = "insert into emprestimos (data_inicial, data_final, ID_amigos, ID_ferramenta, situacao) value (?, ? ,? ,?, ?)";
+        String sql = "insert into emprestimos (data_inicial, data_final, ID_amigos, amigo_nome, ID_ferramenta, ferramenta_nome, situacao) value (?, ? ,? ,?, ?, ?, ?)";
         Connection cnn = null;
         PreparedStatement pStatement = null;
+        Amigo amigo = new Amigo();
 
         try {
             cnn = new ConexaoMVC().getConnection();
@@ -38,8 +39,10 @@ public class EmprestimoDAO {
             pStatement.setDate(1, emprestimo.getDataEmprestimo());
             pStatement.setDate(2, emprestimo.getDataDevolucao());
             pStatement.setInt(3, emprestimo.getId_amigo());
-            pStatement.setInt(4, emprestimo.getId_ferramenta());
-            pStatement.setString(5, "Em andamento");
+            pStatement.setString(4, getNomeAmigo(emprestimo.getId_amigo()));
+            pStatement.setInt(5, emprestimo.getId_ferramenta());
+            pStatement.setString(6, getNomeFerramenta(emprestimo.getId_ferramenta()));
+            pStatement.setString(7, "Em andamento");
             pStatement.execute();
             JOptionPane.showMessageDialog(null, "O empréstimo foi registrado com sucesso ");
 
@@ -47,25 +50,12 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível registrar o empréstimo erro:" + erro);
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
+
         }
-
     }
-
 //altera a coluna situação do empréstimo para "encerrado" sinalizando que o empréstimo ja foi finalizado
+
     public void encerrarEmprestimo(int emprestimo_id) throws ExceptionDAO {
 
         Connection cnn = null;
@@ -86,22 +76,8 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível realizar o fechamento do empréstimo erro:" + erro);
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
-
     }
 
 //Em desenvolvimento ~~
@@ -112,6 +88,7 @@ public class EmprestimoDAO {
     }
 
 //----------------------------------------------------Relatórios----------------------------------------------------------------------//
+    
     public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO {
 
         Connection cnn = null;
@@ -142,21 +119,7 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível realizar a retirada do relatório de empréstimos vencidos erro: " + getEmprestimosVencidos);
 
         } finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
 
@@ -190,27 +153,13 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível localizar o empréstimo solicitado erro:" + ErroProcuraDeEmprestimoPorAmigoID);
 
         } finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
 
         return emprestimosLista;
     }
 
-    //Método sem parâmetros exigidos, retorna uma lista de todos os empréstimos (ativos, atrasados e encerrados)
+//Método sem parâmetros exigidos, retorna uma lista de todos os empréstimos (ativos, atrasados e encerrados)
 //Utiliza a Classe ResultSet para tratar os dados recebidos do banco de dados 
     public List<Emprestimo> getAllEmprestimos() throws ExceptionDAO {
 
@@ -243,25 +192,11 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível retornar os Emprestimos armazenados erro:" + erro);
 
         } finally {
-
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
 
-    //Retorna todos os empréstimos ativos verificando se a coluna "situacao" está preenchida com "Em andamento"
+//Retorna todos os empréstimos ativos verificando se a coluna "situacao" está preenchida com "Em andamento"
 //É retornado em forma de lista de objetos do tipo "Emprestimo"
     public List<Emprestimo> getAllEmprestimosAtivos() throws ExceptionDAO {
 
@@ -292,23 +227,55 @@ public class EmprestimoDAO {
             throw new ExceptionDAO("Não foi possível retirar o relatório de empréstimos ativos" + ErroGetEmprestimosAtivos);
 
         } finally {
+            encerrarConexao(cnn, pStatement);
+        }
+    }
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
-                }
-            }
-            if (pStatement != null) {
-                try {
-                    pStatement.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
-                }
-            }
+    //-------------------------------------------------Funções--------------------------------------------------------------------------------//
+    
+    
+//Recupera o nome de um amigo pelo ID e retorna no formato de uma string para que seja utilizado no registro do empreréstimo
+    public String getNomeAmigo(int ID_amigo) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "SELECT  nome  FROM amigos WHERE ID_amigo = ?";
+        ResultSet select = null;
+        String nome = null;
+
+        try {
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setInt(1, ID_amigo);
+            select = pStatement.executeQuery(sql);
+            nome = select.getString("nome");
+            return nome;
+
+        } catch (SQLException erroGetNome) {
+            throw new ExceptionDAO("não foi possível identificar o nome do amigo através deste ID");
+        }
+    }
+
+//Recupera o nome de uma ferramenta pelo ID e retorna no formato de uma string para utilizar no registro de um novo emprestimo
+    public String getNomeFerramenta(int ID_ferramenta) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        String sql = "SELECT  nome  FROM ferramentas WHERE ID_ferramenta = ?";
+        ResultSet select = null;
+        String nome = null;
+
+        try {
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setInt(1, ID_ferramenta);
+            select = pStatement.executeQuery(sql);
+            nome = select.getString("nome");
+            return nome;
+        } catch (SQLException erroGetNome) {
+            throw new ExceptionDAO("não foi possível identificar o nome do amigo através deste ID");
+
         }
 
-        //---------------------------------------------------------------------------------------------------------------------------------//
     }
 }

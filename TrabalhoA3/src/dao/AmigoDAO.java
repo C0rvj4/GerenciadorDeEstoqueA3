@@ -19,9 +19,9 @@ São as últimas camadas do código antes da alteração do banco de dados.
 bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
 ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 06/06/2024 ~~ modificado por Felipe::
+Último modificação 07/06/2024 ~~ modificado por Felipe::
  */
-public class AmigoDAO {
+public class AmigoDAO extends ConexaoMVC {
 
     //construtor vazio da classe
     public AmigoDAO() {
@@ -47,20 +47,7 @@ public class AmigoDAO {
             throw new ExceptionDAO("Não foi possível registrar o nome amigo erro:" + erroRegistroDeAmigo);
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
 
     }
@@ -96,20 +83,7 @@ public class AmigoDAO {
 
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
 
@@ -133,20 +107,7 @@ public class AmigoDAO {
             throw new ExceptionDAO("Não foi possível editar o nome do cadastro selecionado erro:" + erroEditarNome);
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erro) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erro);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
 
@@ -169,20 +130,7 @@ public class AmigoDAO {
 
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erroExcluirAmigo) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erroExcluirAmigo);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
 
     }
@@ -203,26 +151,14 @@ public class AmigoDAO {
             pStatement.execute();
 
         } catch (SQLException erroEditarContato) {
-            
+
             throw new ExceptionDAO("Não foi possível realizar a alteração do contato erro:" + erroEditarContato);
 
         } finally {
 
-            if (cnn != null) {
-                try {
-                    cnn.close();
-                } catch (SQLException erroExcluirAmigo) {
-                    throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados erro:" + erroExcluirAmigo);
-                }
-                if (pStatement != null) {
-                    try {
-                        pStatement.close();
-                    } catch (SQLException erro) {
-                        throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement");
-                    }
-                }
-            }
+            encerrarConexao(cnn, pStatement);
         }
     }
-}
+    
 
+}

@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -11,8 +12,7 @@ import java.sql.SQLException;
 /* A classe ConexaoMVC tem como único objetivo cria a conexão com o Banco de Dados através do método getConnection().
 Sempre que é necessário acessar o banco de dados exigindo uma conexão com o mesmo este método será utilizado 
 -----------------------------------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-Último modificação 05/06/2024 ~~ modificado por Felipe::
+Último modificação 07/06/2024 ~~ modificado por Felipe;;
  */
 
 public class ConexaoMVC {
@@ -36,6 +36,27 @@ public class ConexaoMVC {
 
         return conn;
 
+    }
+    
+    
+// ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
+//ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+    public void encerrarConexao(Connection cnn, PreparedStatement pStatement) throws ExceptionDAO {
+
+        if (cnn != null) {
+            try {
+                cnn.close();
+            } catch (SQLException erro) {
+                throw new ExceptionDAO("Não foi possível encerrar a conexão com o banco de dados");
+            }
+        }
+        if (pStatement != null) {
+            try {
+                pStatement.close();
+            } catch (SQLException erro) {
+                throw new ExceptionDAO("Não foi possível encerrar a conexão com o Prepare Statement" + erro);
+            }
+        }
     }
 
 }

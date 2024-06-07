@@ -14,8 +14,7 @@ import modelo.Emprestimo;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
-Último modificação 05/06/2024  ~~ modificado por Felipe 
+Último modificação 07/06/2024  ~~ modificado por Felipe ;;
  */
 
 

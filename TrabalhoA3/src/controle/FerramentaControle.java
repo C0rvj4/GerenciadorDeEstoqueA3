@@ -11,7 +11,7 @@ import modelo.Ferramenta;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 06/06/2024 ~~ modificado por Felipe
+Último modificação 07/06/2024 ~~ modificado por Felipe;;
  */
 public class FerramentaControle {
 
@@ -56,12 +56,13 @@ public class FerramentaControle {
             return false;
         }
     }
-}
 
 //Este método não requer validação de parâmetros pois não exige parâmetros
 //Esta função foi criada por necessidade de uma padronização na chamada dos métodos 
 //Controle > modelo > DAO
-    public getFerramentasRegistradas(){
+    public void getFerramentasRegistradas() {
         Ferramenta ferramenta = new Ferramenta();
         ferramenta.getFerramentasRegistradas();
     }
+
+}
