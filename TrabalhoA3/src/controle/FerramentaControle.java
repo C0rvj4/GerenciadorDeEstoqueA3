@@ -45,6 +45,19 @@ public class FerramentaControle {
         }
     }
 
+    public boolean editarNome(int ID_ferramenta, String novoNome) throws ExceptionDAO {
+        if (ID_ferramenta > 0 && novoNome != null && novoNome.length() > 3) {
+            Ferramenta ferramenta = new Ferramenta();
+            ferramenta.setID(ID_ferramenta);
+            ferramenta.setNome(novoNome);
+            ferramenta.editarNome(ferramenta);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
 //Faz a validação para que o ID passado seja constatado como válido
     public boolean excluirFerramenta(int ID_ferramenta) throws ExceptionDAO {
 
@@ -60,7 +73,7 @@ public class FerramentaControle {
 //Este método não requer validação de parâmetros pois não exige parâmetros
 //Esta função foi criada por necessidade de uma padronização na chamada dos métodos 
 //Controle > modelo > DAO
-    public void getFerramentasRegistradas() {
+    public void getFerramentasRegistradas() throws ExceptionDAO {
         Ferramenta ferramenta = new Ferramenta();
         ferramenta.getFerramentasRegistradas();
     }

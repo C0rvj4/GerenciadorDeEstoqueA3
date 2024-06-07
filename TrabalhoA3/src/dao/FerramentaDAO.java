@@ -16,8 +16,8 @@ import modelo.Ferramenta;
 /* A classe DAO é a responsável por alterar o banco de dados de fato, as classes dao são chamadas pela classe modelo.
 São as últimas camadas do código antes da alteração do banco de dados.
 
-Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja
+ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro
 -----------------------------------------------------------------------------------------------------------------------------
 Último modificação 07/06/2024 ~~ modificado por Felipe;;
  */
@@ -41,8 +41,8 @@ public class FerramentaDAO extends ConexaoMVC {
 
         } catch (SQLException erro) {
             throw new ExceptionDAO("Erro ao registra nova ferramenta: " + erro);
-        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
-        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
+        } //bloco finally verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja
+        // ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro
         finally {
             encerrarConexao(cnn, pStatement);
         }
@@ -70,8 +70,29 @@ public class FerramentaDAO extends ConexaoMVC {
         }
     }
 
-//Exclui um registro de ferramenta do banco de dados utilizando de parâmetro o ID da ferramenta 
-    public void excluirAmigo(int ID_ferramenta) throws ExceptionDAO {
+//Edita o nome de uma ferramenta no banco de dados tendo como parâmetro de busca o ID da ferramenta
+    public void editarNome(int ID_ferramenta, String novoNome) throws ExceptionDAO {
+
+        PreparedStatement pStatement = null;
+        Connection cnn = null;
+        String sql = "UPDATE ferramentas SET nome = ? WHERE ID_ferramenta = ?";
+
+        try {
+
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setString(1, novoNome);
+            pStatement.setInt(2, ID_ferramenta);
+            pStatement.execute();
+        } catch (SQLException erroEditarNome) {
+            throw new ExceptionDAO("Não foi possível editar o nome da ferramenta: erro" + erroEditarNome);
+        } finally {
+            encerrarConexao(cnn, pStatement);
+        }
+    }
+
+//Exclui um registro de ferramenta do banco de dados utilizando de parâmetro o ID da ferramenta
+    public void excluirFerramenta(int ID_ferramenta) throws ExceptionDAO {
 
         PreparedStatement pStatement = null;
         Connection cnn = null;
@@ -93,7 +114,7 @@ public class FerramentaDAO extends ConexaoMVC {
 
 //Retorna um relatório das ferramentas registradas no formato de Arraylist
 //Não requer parâmetro
-//Utiliza uma condicional While para criar objetos e inseri-los dentro do arrayList (relatorios) 
+//Utiliza uma condicional While para criar objetos e inseri-los dentro do arrayList (relatorios)
     public List<Ferramenta> getFerramentasRegistradas() throws ExceptionDAO {
 
         Connection cnn = null;

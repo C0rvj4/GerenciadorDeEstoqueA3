@@ -57,7 +57,7 @@ public class Ferramenta {
 //Cria um objeto dao e chama o método excluirAmigo passando como parâmetro o ID para localiz no banco de dados
     public void excluirFerramenta(int ID_ferramenta) throws ExceptionDAO{
         FerramentaDAO dao = new FerramentaDAO();
-        dao.excluirAmigo(ID_ferramenta);
+        dao.excluirFerramenta(ID_ferramenta);
 
     }
 
@@ -68,8 +68,9 @@ public class Ferramenta {
 
     }
 
-    public void editarNome(Ferramenta ferramenta) {
-
+    public void editarNome(Ferramenta ferramenta) throws ExceptionDAO {
+        FerramentaDAO dao = new FerramentaDAO();
+        dao.editarNome(ferramenta.getID(), ferramenta.getNome());
     }
 
     //-------------------------------------Getters e Seters--------------------------------------------------------------------------//
