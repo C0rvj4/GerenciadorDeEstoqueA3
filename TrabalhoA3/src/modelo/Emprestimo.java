@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
 As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-Última modificação efetuada em 05/06/2024 ~~ modificado por Felipe;;
+Última modificação efetuada em 09/06/2024 ~~ modificado por Felipe;;
  */
 
 public class Emprestimo {
@@ -49,6 +49,10 @@ public class Emprestimo {
         EmprestimoDAO dao = new EmprestimoDAO();
         dao.cadastroEmprestimo(emprestimo);
 
+    }
+    
+    public void editarAmigo(int ID_novoAmigo, int ID_emprestimo){
+        
     }
 
     // encerra o empréstimo (altera a situação do empréstimo para encerrado)

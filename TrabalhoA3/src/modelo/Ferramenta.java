@@ -14,7 +14,7 @@ import dao.FerramentaDAO;
 /*A classes Modelo, tem como sua principal função administrar a criação de novos objetos
 As classes do pacote modelo são chamadas pelas classes do ppackage "Controle" para facilitar o encapsulamento dos getters e setters
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-Última modificação efetuada em 07/06/2024 ~~ modificado por Felipe;;
+Última modificação efetuada em 09/06/2024 ~~ modificado por Felipe;;
  */
 public class Ferramenta {
 
@@ -53,6 +53,11 @@ public class Ferramenta {
         dao.editarMarca(ferramenta.getID(), ferramenta.getMarca());
 
     }
+    
+    public void editarNome(Ferramenta ferramenta) throws ExceptionDAO {
+        FerramentaDAO dao = new FerramentaDAO();
+        dao.editarNome(ferramenta.getID(), ferramenta.getNome());
+    }
 
 //Cria um objeto dao e chama o método excluirAmigo passando como parâmetro o ID para localiz no banco de dados
     public void excluirFerramenta(int ID_ferramenta) throws ExceptionDAO{
@@ -68,10 +73,7 @@ public class Ferramenta {
 
     }
 
-    public void editarNome(Ferramenta ferramenta) throws ExceptionDAO {
-        FerramentaDAO dao = new FerramentaDAO();
-        dao.editarNome(ferramenta.getID(), ferramenta.getNome());
-    }
+    
 
     //-------------------------------------Getters e Seters--------------------------------------------------------------------------//
     public String getNome() {

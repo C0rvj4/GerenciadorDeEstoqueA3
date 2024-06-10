@@ -40,7 +40,7 @@ public class AmigoDAO extends ConexaoMVC {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
             pStatement.setString(1, amigo.getNome());
-            pStatement.setString(1, amigo.getContato());
+            pStatement.setString(2, amigo.getContato());
             pStatement.execute();
 
         } catch (SQLException erroRegistroDeAmigo) {

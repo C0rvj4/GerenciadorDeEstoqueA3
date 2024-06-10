@@ -2,6 +2,7 @@ package controle;
 
 import dao.ExceptionDAO;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.Amigo;
 import modelo.Amigo;
 
@@ -18,7 +19,7 @@ as classes controle farão a validação dos dados antes de enviar as classes mo
 Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
 ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 06/06/2024  ~~ modificado por Felipe 
+Último modificação 09/06/2024  ~~ modificado por Felipe 
  */
 public class AmigoControle {
 
@@ -27,13 +28,16 @@ public class AmigoControle {
 //caso o paço anterior não seja bem sucedido ele retorna um valor false (Sem tratamento ainda)
     public boolean registrarAmigo(String nome, String contato) throws ExceptionDAO {
 
+        boolean condicao = false;
         if (nome != null && nome.length() >= 3 && contato != null && contato.length() >= 8) {
             Amigo amigo = new Amigo();
             amigo.setNome(nome);
             amigo.setContato(contato);
             amigo.registrarAmigo(amigo);
+            JOptionPane.showMessageDialog(null, "O amigo foi registrado com sucesso!");
             return true;
         } else {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao registrar o amigo, tente novamente!");
             return false;
         }
     }
@@ -85,9 +89,9 @@ public class AmigoControle {
             amigo.setContato(contato);
             amigo.editarContato(amigo);
             return true;
-        }else return false;
+        } else {
+            return false;
+        }
     }
-
-
 
 }
