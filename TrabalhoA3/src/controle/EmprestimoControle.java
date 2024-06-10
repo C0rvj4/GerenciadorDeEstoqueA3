@@ -14,7 +14,7 @@ import modelo.Emprestimo;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 07/06/2024  ~~ modificado por Felipe ;;
+Último modificação 10/06/2024  ~~ modificado por Felipe ;;
  */
 
 
@@ -33,8 +33,10 @@ public class EmprestimoControle {
             Emprestimo emprestimo = new Emprestimo(dataEmprestimo, dataDevolucao, amigoID, ferramentaID);
             emprestimo.registrarEmprestimo(emprestimo);
             return true;
+            JOptionPane.showMessageDialog(null, "O novo empréstimo foi registrado com sucesso!");
 
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar o regisrto do novo empréstio!");
             return false;
         }
 
@@ -48,8 +50,11 @@ public class EmprestimoControle {
         if (amigoID > 0) {
             EmprestimoDAO dao = new EmprestimoDAO();
             dao.getEmprestimoPorAmigoID(amigoID);
+            return true;
+        }else{
+            return false;
         }
-        return true;
+        
     }
 
 //Encerra um emprestimo significa alterar a coluna "situacao" do emprestimo no banco de dados, para "encerrado"
@@ -60,9 +65,11 @@ public class EmprestimoControle {
         if (emprestimo_id > 0) {
             Emprestimo emprestimo = new Emprestimo();
             emprestimo.EncerrarEmprestimo(emprestimo_id);
+            JOptionPane.showMessageDialog(null, "O empréstimo foi encerrado com sucesso!");
             return true;
 
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar o encerramento do empréstimo!");
             return false;
         }
     }

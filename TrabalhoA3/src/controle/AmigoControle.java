@@ -19,7 +19,7 @@ as classes controle farão a validação dos dados antes de enviar as classes mo
 Os blocos finally ao final dos métodos verifica se a conexão com o banco de dados e com o pStatement ainda é existente, caso seja 
 ocorre a tentativa de encerrar a conexão, caso não seja possível é lançado um erro 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 09/06/2024  ~~ modificado por Felipe 
+Último modificação 10/06/2024  ~~ modificado por Felipe 
  */
 public class AmigoControle {
 
@@ -56,9 +56,11 @@ public class AmigoControle {
         if (ID_amigo > 0) {
             Amigo amigo = new Amigo();
             amigo.excluirAmigo(ID_amigo);
+            JOptionPane.showMessageDialog(null, "O amigo foi excluido com sucesso!");
             return true;
 
         } else {
+            JOptionPane.showMessageDialog(null,"Não foi possível excluir o amigo!");
             return false;
         }
     }
@@ -73,23 +75,29 @@ public class AmigoControle {
             amigo.setNome(novoNome);
             amigo.setID(ID_amigo);
             amigo.editarNome(amigo);
+            JOptionPane.showMessageDialog(null, "O nome do amigo foi alterado para:" + novoNome);
             return true;
 
-        }
+        }else{
+        JOptionPane.showMessageDialog(null, "ão foi possível alterrar o nome para:" + novoNome);
         return false;
+        }
+        
     }
 
 //Faz a validação dos parâmetros fornecidos pela camada view para evitar erros na atribuição dos dados e na pesquisa
 //Cria um objeto do tipo amigo para chamar a função de edição e passa os parâmetros fornecidos anteriormente
-    public boolean editarContato(int ID_amigo, String contato) throws ExceptionDAO {
+    public boolean editarContato(int ID_amigo, String novoContato) throws ExceptionDAO {
 
-        if (ID_amigo > 0 && contato != null && contato.length() >= 8) {
+        if (ID_amigo > 0 && contato != null && novoContato.length() >= 8) {
             Amigo amigo = new Amigo();
             amigo.setID(ID_amigo);
-            amigo.setContato(contato);
+            amigo.setContato(novoContato);
             amigo.editarContato(amigo);
+            JOptionPane.showMessageDialog(null, "O contato do amigo foi editado para:" + novoContato);
             return true;
         } else {
+            JOptionPane.showMessageDialog(null, "O contato do amigo foi editado para:" + novoContato);
             return false;
         }
     }

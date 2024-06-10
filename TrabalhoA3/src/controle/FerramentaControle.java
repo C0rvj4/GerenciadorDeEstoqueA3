@@ -11,7 +11,7 @@ import modelo.Ferramenta;
 com as classes modelo, que fara o CRUD nos objetos.
 Além de fazer o papel de intermediário as classes controle farão a validação dos dados antes de enviar as classes modelo 
 -----------------------------------------------------------------------------------------------------------------------------
-Último modificação 07/06/2024 ~~ modificado por Felipe;;
+Último modificação 10/06/2024 ~~ modificado por Felipe;;
  */
 public class FerramentaControle {
 
@@ -23,8 +23,10 @@ public class FerramentaControle {
 
             Ferramenta ferramenta = new Ferramenta(nome, marca, custoAquisicao);
             ferramenta.cadastroFerramenta(ferramenta);
+            JOptionPane.showMessageDialog(null, "A nova ferramenta foi registrada com sucesso!");
             return true;
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar o registro da nova ferramenta!");
             return false;
         }
     }
@@ -38,9 +40,11 @@ public class FerramentaControle {
             ferramenta.setNome(novaMarca);
             ferramenta.setID(ID_ferramenta);
             ferramenta.editarMarca(ferramenta);
+            JOptionPane.showMessageDialog(null, "A marca da ferramenta foi editada para:" + novaMarca);
             return true;
 
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível editar a marca da ferramenta para" + novaMarca);
             return false;
         }
     }
@@ -51,9 +55,12 @@ public class FerramentaControle {
             ferramenta.setID(ID_ferramenta);
             ferramenta.setNome(novoNome);
             ferramenta.editarNome(ferramenta);
+            JOptionPane.showMessageDialog(null, "O nome da ferramenta foi editado para:" + novoNome);
             return true;
 
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível editar o nome da ferramenta para:" + novoNome);
+        return false;
             return false;
         }
     }
@@ -64,8 +71,11 @@ public class FerramentaControle {
         if (ID_ferramenta > 0) {
             Ferramenta ferramenta = new Ferramenta();
             ferramenta.excluirFerramenta(ID_ferramenta);
+            JOptionPane.showMessageDialog(null, "A ferramenta foi excluída com sucesso!");
+        return false;
             return true;
         } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir a ferramenta!")
             return false;
         }
     }
