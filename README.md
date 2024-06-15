@@ -1,8 +1,8 @@
 # GerenciadorDeEstoqueA3
 
-Este projeto utiliza do método MVC (Model, view & Control) de programação orientada a objeto. Ou seja o código está dividido em três partes príncipais para o encapsulamento dos métodos. Ele utiliza de um banco de dados local feito e gerênciado no MySQL.
+Este projeto utiliza do método MVC (Model, view & Control) de programação orientada a objeto. Ou seja o código está dividido em três partes príncipais para o encapsulamento dos métodos. Ele utiliza de um banco de dados local feito e gerênciado em MySQL.
 
-Portanto para que o programa funcione corretamente, deve existir um banco de dados feito em MySQL (recomendo a utilização do mysql workbench) com as seguintes configurações:
+Portanto para que o programa funcione corretamente, deve existir um banco de dados local feito em MySQL com as seguintes configurações:
 
 
 Nome: MVC
@@ -10,9 +10,8 @@ Service: localhost:3306
 login: root
 Senha: F!el1pe2003.@0
 
-Criação das tabelas:
+Criação das tabelas e do banco de dados;
 
-drop database if exists MVC;
 create database if  not exists MVC;
 use MVC;
 
