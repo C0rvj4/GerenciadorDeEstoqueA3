@@ -89,7 +89,7 @@ public class AmigoControle {
 //Cria um objeto do tipo amigo para chamar a função de edição e passa os parâmetros fornecidos anteriormente
     public boolean editarContato(int ID_amigo, String novoContato) throws ExceptionDAO {
 
-        if (ID_amigo > 0 && contato != null && novoContato.length() >= 8) {
+        if (ID_amigo > 0 && novoContato != null && novoContato.length() >= 8) {
             Amigo amigo = new Amigo();
             amigo.setID(ID_amigo);
             amigo.setContato(novoContato);
