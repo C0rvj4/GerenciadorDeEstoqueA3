@@ -65,7 +65,7 @@ public class AmigoDAO extends ConexaoMVC {
         try {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
 
             while (select.next()) {
 

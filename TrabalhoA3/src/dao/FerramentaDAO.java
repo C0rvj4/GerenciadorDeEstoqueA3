@@ -1,5 +1,6 @@
 package dao;
 
+import com.mysql.jdbc.ResultSetImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -127,7 +128,7 @@ public class FerramentaDAO extends ConexaoMVC {
 
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
 
             while (select.next()) {
                 Ferramenta ferramenta = new Ferramenta();
@@ -141,6 +142,32 @@ public class FerramentaDAO extends ConexaoMVC {
         } catch (SQLException erroRetiradaDeRelatorio) {
             throw new ExceptionDAO("Não foi possível retirar o relatório de ferramentas registradas, erro:" + erroRetiradaDeRelatorio);
         } finally {
+            encerrarConexao(cnn, pStatement);
+        }
+    }
+    
+    
+    public double getTotalGasto() throws ExceptionDAO{
+        
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        ResultSet soma = null;
+        String sql = "SELECT SUM(valor) AS total_gasto FROM ferramentas";
+        
+        try{
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            soma = pStatement.executeQuery(sql);
+            
+            if(soma.next()){
+                double resultado = soma.getDouble("total_gasto");
+                return resultado;
+            }else{
+                return 00.00;
+            }
+        }catch(SQLException erroCalcula){
+            throw new ExceptionDAO("Erro ao calcular o valor total gasto:" + erroCalcula);
+        }finally{
             encerrarConexao(cnn, pStatement);
         }
     }

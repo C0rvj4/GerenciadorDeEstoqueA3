@@ -67,7 +67,7 @@ public class EmprestimoDAO extends ConexaoMVC {
 
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            update = pStatement.executeQuery(sql);
+            update = pStatement.executeQuery();
 
             pStatement.setString(1, "Encerrado");
             pStatement.setInt(2, emprestimo_id);
@@ -99,7 +99,7 @@ public class EmprestimoDAO extends ConexaoMVC {
         try {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
 
             while (select.next()) {
                 Emprestimo emprestimo = new Emprestimo();
@@ -171,7 +171,7 @@ public class EmprestimoDAO extends ConexaoMVC {
 
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
             List<Emprestimo> emprestimosLista = new ArrayList<Emprestimo>();
 
             while (select.next()) {
@@ -207,7 +207,7 @@ public class EmprestimoDAO extends ConexaoMVC {
         try {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
             List<Emprestimo> emprestimoLista = new ArrayList<>();
 
             while (select.next()) {
@@ -244,7 +244,7 @@ public class EmprestimoDAO extends ConexaoMVC {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
             pStatement.setInt(1, ID_amigo);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
             nome = select.getString("nome");
             return nome;
 
@@ -266,7 +266,7 @@ public class EmprestimoDAO extends ConexaoMVC {
             cnn = new ConexaoMVC().getConnection();
             pStatement = cnn.prepareStatement(sql);
             pStatement.setInt(1, ID_ferramenta);
-            select = pStatement.executeQuery(sql);
+            select = pStatement.executeQuery();
             nome = select.getString("nome");
             return nome;
         } catch (SQLException erroGetNome) {
@@ -290,18 +290,14 @@ public class EmprestimoDAO extends ConexaoMVC {
             pStatement.setInt(1, amigo_id);
             pStatement.setString(2, "Em andamento");
 
-            try {
-                select = pStatement.executeQuery(sql);
-                if (select.next()) {
-                    int numeroDeEmprestimos = select.getInt("num_emprestimos");
-                    JOptionPane.showMessageDialog(null, "O amigo possuí" + numeroDeEmprestimos + "emprestimos ativos");
-                    return true;
+            select = pStatement.executeQuery(sql);
+            if (select.next()) {
+                int numeroDeEmprestimos = select.getInt("num_emprestimos");
+                JOptionPane.showMessageDialog(null, "O amigo possuí" + numeroDeEmprestimos + "emprestimos ativos");
+                return true;
 
-                } else {
-                    return false;
-                }
-            } catch (SQLException erroVerificação) {
-                throw new ExceptionDAO("Não foi possível realizar a contagem de empréstimos ativos para este amigo erro:" + erroVerificação);
+            } else {
+                return false;
             }
 
         } catch (SQLException erroAoConsultar) {

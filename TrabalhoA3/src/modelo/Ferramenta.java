@@ -72,6 +72,11 @@ public class Ferramenta {
         dao.getFerramentasRegistradas();
 
     }
+    
+    public void getTotalGasto(){
+       FerramentaDAO dao = new FerramentaDAO();
+       dao.getTotalGasto();
+    }
 
     
 

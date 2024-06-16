@@ -87,5 +87,10 @@ public class FerramentaControle {
         Ferramenta ferramenta = new Ferramenta();
         ferramenta.getFerramentasRegistradas();
     }
+    
+    public void getTotalGasto(){
+        Ferramenta ferramenta = new Ferramenta();
+        ferramenta.getTotalGasto();
+    }
 
 }
