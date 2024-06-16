@@ -51,6 +51,7 @@ public class Emprestimo {
 
     }
     
+    //edita um amigo
     public void editarAmigo(int ID_novoAmigo, int ID_emprestimo){
         
     }
@@ -66,8 +67,13 @@ public class Emprestimo {
     public void updateSituacaoEmpestimos() {
 
     }
-
-    ;
+    
+    //Verifica se um amigo ainda tem um empréstimo ativo
+    
+    public void verificarEmprestimoAmigo(int amigo_id){
+        EmprestimoDAO dao = new EmprestimoDAO();
+        dao.verificarEmprestimoAmigo(amigo_id);
+    }
     
    
     

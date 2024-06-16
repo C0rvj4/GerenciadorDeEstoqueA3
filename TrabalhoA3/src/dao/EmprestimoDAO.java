@@ -88,7 +88,6 @@ public class EmprestimoDAO extends ConexaoMVC {
     }
 
 //----------------------------------------------------Relatórios----------------------------------------------------------------------//
-    
     public List<Emprestimo> getAllEmprestimosVencidos() throws ExceptionDAO {
 
         Connection cnn = null;
@@ -232,8 +231,6 @@ public class EmprestimoDAO extends ConexaoMVC {
     }
 
     //-------------------------------------------------Funções--------------------------------------------------------------------------------//
-    
-    
 //Recupera o nome de um amigo pelo ID e retorna no formato de uma string para que seja utilizado no registro do empreréstimo
     public String getNomeAmigo(int ID_amigo) throws ExceptionDAO {
 
@@ -275,6 +272,43 @@ public class EmprestimoDAO extends ConexaoMVC {
         } catch (SQLException erroGetNome) {
             throw new ExceptionDAO("não foi possível identificar o nome do amigo através deste ID");
 
+        }
+
+    }
+
+    public boolean verificarEmprestimoAmigo(int amigo_id) throws ExceptionDAO {
+
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
+        ResultSet select = null;
+        String sql = "SELECT COUNT(*) AS num_emprestimos FROM emprestimos WHERE ID_amigo = ? AND situacao = ?";
+
+        try {
+
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
+            pStatement.setInt(1, amigo_id);
+            pStatement.setString(2, "Em andamento");
+
+            try {
+                select = pStatement.executeQuery(sql);
+                if (select.next()) {
+                    int numeroDeEmprestimos = select.getInt("num_emprestimos");
+                    JOptionPane.showMessageDialog(null, "O amigo possuí" + numeroDeEmprestimos + "emprestimos ativos");
+                    return true;
+
+                } else {
+                    return false;
+                }
+            } catch (SQLException erroVerificação) {
+                throw new ExceptionDAO("Não foi possível realizar a contagem de empréstimos ativos para este amigo erro:" + erroVerificação);
+            }
+
+        } catch (SQLException erroAoConsultar) {
+            throw new ExceptionDAO("Não foi possível realizar a consulta erro:" + erroAoConsultar);
+
+        } finally {
+            encerrarConexao(cnn, pStatement);
         }
 
     }

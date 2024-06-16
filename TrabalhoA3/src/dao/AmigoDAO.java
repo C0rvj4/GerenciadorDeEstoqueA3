@@ -115,12 +115,14 @@ public class AmigoDAO extends ConexaoMVC {
 //Utiliza da linguagem SQL para localizar o registro utilizando WHERE = ? que recebe o valor do parâmetro ID_amigo
     public void excluirAmigo(int ID_amigo) throws ExceptionDAO {
 
-        
+        Connection cnn = null;
+        PreparedStatement pStatement = null;
         String sql = "DELETE FROM amigo WHERE ID = ? ";
-
+        
         try {
             
-            iniciarConexao(sql)
+            cnn = new ConexaoMVC().getConnection();
+            pStatement = cnn.prepareStatement(sql);
             pStatement.setInt(1, ID_amigo);
             pStatement.execute();
 

@@ -1,6 +1,7 @@
 package controle;
 
 import dao.ExceptionDAO;
+import javax.swing.JOptionPane;
 import modelo.Ferramenta;
 
 /**
@@ -61,7 +62,7 @@ public class FerramentaControle {
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível editar o nome da ferramenta para:" + novoNome);
         return false;
-            return false;
+            
         }
     }
 
@@ -72,10 +73,9 @@ public class FerramentaControle {
             Ferramenta ferramenta = new Ferramenta();
             ferramenta.excluirFerramenta(ID_ferramenta);
             JOptionPane.showMessageDialog(null, "A ferramenta foi excluída com sucesso!");
-        return false;
             return true;
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir a ferramenta!")
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir a ferramenta!");
             return false;
         }
     }

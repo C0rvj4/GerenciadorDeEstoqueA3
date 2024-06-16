@@ -59,13 +59,4 @@ public class ConexaoMVC {
         }
     }
 
-//Inicializa a conexão com o banco de dados e com o Prepared Statement, tem como parâmetro uma String que é fornecida no método em que esta função é chamada 
-    public void iniciarConexao(String sql){
-        
-        Connection cnn = null;
-        PreparedStatement pStatement = null;
-        cnn = new ConexaoMVC().getConnection();
-        pStatement = cnn.prepareStatement(sql);
-    }
-
 }

@@ -4,6 +4,7 @@ import dao.EmprestimoDAO;
 import dao.ExceptionDAO;
 import java.sql.Date;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelo.Emprestimo;
 
 /**
@@ -19,9 +20,6 @@ Além de fazer o papel de intermediário as classes controle farão a validaçã
 
 
 
-
-
-
 public class EmprestimoControle {
 
 //Verifica se os parametros fornecidos não são nulos, para previnir a adição de dados incongruentes ao Banco de Dados.
@@ -32,8 +30,9 @@ public class EmprestimoControle {
         if (dataEmprestimo != null && dataDevolucao != null && amigoID > 0 && ferramentaID > 0) {
             Emprestimo emprestimo = new Emprestimo(dataEmprestimo, dataDevolucao, amigoID, ferramentaID);
             emprestimo.registrarEmprestimo(emprestimo);
-            return true;
             JOptionPane.showMessageDialog(null, "O novo empréstimo foi registrado com sucesso!");
+            return true;
+            
 
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível realizar o regisrto do novo empréstio!");
@@ -85,5 +84,20 @@ public class EmprestimoControle {
         dao.getAllEmprestimosAtivos();
 
     }
+    
+    
+    public boolean verificarEmprestimoAmigo(int amigo_ID){
+        
+        if(amigo_ID > 0){
+            Emprestimo emprestimo = new Emprestimo();
+            emprestimo.verificarEmprestimoAmigo(amigo_ID);
+            return true;
+            
+        }else{
+            JOptionPane.showMessageDialog(null,"Não foi possível identificar um amigo com o ID:" + amigo_ID);
+            return false;
+        }
+    }
+        
 ;
 }
