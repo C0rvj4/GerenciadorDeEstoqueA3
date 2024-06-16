@@ -86,7 +86,7 @@ public class EmprestimoControle {
     }
     
     
-    public boolean verificarEmprestimoAmigo(int amigo_ID){
+    public boolean verificarEmprestimoAmigo(int amigo_ID) throws ExceptionDAO{
         
         if(amigo_ID > 0){
             Emprestimo emprestimo = new Emprestimo();

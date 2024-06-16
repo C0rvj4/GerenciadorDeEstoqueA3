@@ -69,7 +69,6 @@ public class Emprestimo {
     }
     
     //Verifica se um amigo ainda tem um empréstimo ativo
-    
     public void verificarEmprestimoAmigo(int amigo_id) throws ExceptionDAO{
         EmprestimoDAO dao = new EmprestimoDAO();
         dao.verificarEmprestimoAmigo(amigo_id);

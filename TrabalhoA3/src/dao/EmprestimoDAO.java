@@ -276,12 +276,13 @@ public class EmprestimoDAO extends ConexaoMVC {
 
     }
 
+    //Verifica se o amigo possuí algum empréstimo ativo ou atrasado
     public boolean verificarEmprestimoAmigo(int amigo_id) throws ExceptionDAO {
 
         Connection cnn = null;
         PreparedStatement pStatement = null;
         ResultSet select = null;
-        String sql = "SELECT COUNT(*) AS num_emprestimos FROM emprestimos WHERE ID_amigo = ? AND situacao = ?";
+        String sql = "SELECT COUNT(*) AS num_emprestimos FROM emprestimos WHERE ID_amigo = ? AND situacao = ? OR situacao = ?";
 
         try {
 
@@ -289,6 +290,7 @@ public class EmprestimoDAO extends ConexaoMVC {
             pStatement = cnn.prepareStatement(sql);
             pStatement.setInt(1, amigo_id);
             pStatement.setString(2, "Em andamento");
+            pStatement.setString(3, "Atrasado");
 
             select = pStatement.executeQuery(sql);
             if (select.next()) {

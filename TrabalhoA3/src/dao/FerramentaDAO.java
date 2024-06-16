@@ -146,7 +146,9 @@ public class FerramentaDAO extends ConexaoMVC {
         }
     }
     
-    
+
+//Faz o calculo de todos os valores das ferramentas e retorna em formato double, caso não consiga efetuar
+//retorna um valor zerado em formato double
     public double getTotalGasto() throws ExceptionDAO{
         
         Connection cnn = null;

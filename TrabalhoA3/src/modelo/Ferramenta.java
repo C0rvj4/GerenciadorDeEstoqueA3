@@ -72,8 +72,8 @@ public class Ferramenta {
         dao.getFerramentasRegistradas();
 
     }
-    
-    public void getTotalGasto(){
+//Método que chama a classe ferramenta dao para realizar um calculo dos valores gastos com as ferramentas
+    public void getTotalGasto() throws ExceptionDAO{
        FerramentaDAO dao = new FerramentaDAO();
        dao.getTotalGasto();
     }
